@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, signal, ViewChild, inject } from '@angular/core';
+import { MatStepper } from '@angular/material/stepper';
 import { RouterOutlet } from '@angular/router';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
@@ -34,6 +35,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  @ViewChild(MatStepper) stepper!: MatStepper;
   importService = inject(ImportService);
   isLinear = false;
   title = 'import-ang';
@@ -101,6 +103,7 @@ export class AppComponent {
       mapDialog.afterClosed().subscribe((result: any) => {
         if(result){
           this.afterMapping(result);
+          this.stepper.next();
         }
         // this.mapping.set(result);
         // this.colDefs.set(this.importService.fields.map((field: any) => {
