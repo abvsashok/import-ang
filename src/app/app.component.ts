@@ -139,11 +139,30 @@ export class AppComponent {
     this.colsFromExcel.set([...colSet]);
   }
   downloadData() {
-    console.log(this.filteredRowData);
-    // this.stepper.next();
+    const colDefs = this.colDefs();
+    const columns = colDefs.map((col: any) => col.field);
+    const headers = colDefs.map((col: any) => col.headerName || col.field);
+
+    const data = this.filteredRowData.map((row: any) => {
+      const filteredRow: any = {};
+      columns.forEach((col, idx) => {
+        filteredRow[headers[idx]] = row[col] !== undefined ? row[col] : '';
+      });
+      return filteredRow;
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(data, { header: headers });
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'FilteredData');
+
+    XLSX.writeFile(workbook, 'filtered_data.xlsx');
   }
   saveData() {
 
+  }
+
+  hasErrorsInFilteredData(): boolean {
+    return this.filteredRowData.some((row: any) => row.error || (row.errors && row.errors.length > 0));
   }
   updateMapping() {
     let mapDialog = this.dialog.open(MapTemplateComponent, {

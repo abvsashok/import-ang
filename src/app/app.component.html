@@ -3,14 +3,14 @@
     <mat-step>
       <ng-template matStepLabel>Download Template</ng-template>
       <div style="padding: 16px 0px;">
-        <button mat-button (click)="handleDownload()">Download Template</button>
+        <button mat-raised-button color="primary" (click)="handleDownload()"><mat-icon>download</mat-icon>Download Template</button>
       </div>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Upload</ng-template>
       <div style="padding: 16px 0px; display: flex; align-items: center; gap: 16px;">
         <ng-container *ngIf="!uploadedFileName(); else fileInfo">
-          <button mat-raised-button color="primary" (click)="fileInput.click()">Upload Excel File</button>
+          <button mat-raised-button color="primary" (click)="fileInput.click()"><mat-icon>upload</mat-icon>Upload Excel File</button>
           <input #fileInput type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" style="display: none;" />
         </ng-container>
         <ng-template #fileInfo>
@@ -35,7 +35,7 @@
             <button mat-stroked-button (click)="downloadData()">
               <mat-icon>download</mat-icon>
               Download Data</button>
-            <button mat-stroked-button (click)="saveData()">Proceed</button>
+            <button mat-flat-button color="primary" (click)="saveData()" [disabled]="hasErrorsInFilteredData()">Proceed</button>
           </div>
         </div>
         <ag-grid-angular style="width: 100%; height: 100%;" [rowData]="filteredRowData" [columnDefs]="colDefs()" />
