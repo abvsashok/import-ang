@@ -1,3 +1,71 @@
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .map-template {
-  padding: 20px;
+  padding: 6px 32px 0 32px;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fafbfc;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(60,60,60,0.06);
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  min-height: 400px;
+}
+
+.mapping-scroll-area {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  max-height: 70vh;
+  padding-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 50px;
+}
+
+.mapping-row {
+  width: 100%;
+  max-width: 600px;
+}
+
+
+.mapping-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+  padding: 8px 0;
+  border-bottom: 1px solid #ececec;
+}
+
+.field-label {
+  flex: 1;
+  text-align: right;
+  padding-right: 18px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 1.05em;
+  min-width: 120px;
+}
+
+.excel-col {
+  flex: 2;
+  text-align: left;
+}
+
+.mapping-footer {
+  flex-shrink: 0;
+  padding: 12px 0 0 0;
+  background: #fafbfc;
+  text-align: right;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  box-shadow: 0 -2px 8px rgba(60,60,60,0.03);
 }

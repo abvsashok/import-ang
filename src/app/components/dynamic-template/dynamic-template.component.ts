@@ -6,11 +6,12 @@ import * as ExcelJS from 'exceljs';
 import { CommonModule } from '@angular/common';
 import { ImportService } from '../../services/import/import.service';
 import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-dynamic-template',
   standalone: true,
-  imports: [MatCheckboxModule, CommonModule, MatListModule, MatIconModule],
+  imports: [MatCheckboxModule, CommonModule, MatListModule, MatIconModule, MatButtonModule],
   templateUrl: './dynamic-template.component.html',
   styleUrls: ['./dynamic-template.component.scss']
 })

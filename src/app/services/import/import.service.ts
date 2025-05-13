@@ -31,6 +31,18 @@ export class ImportService {
     },
     {
       name: 'country'
+    },
+    {
+      name: 'CompanyName'
+    },
+    {
+      name: 'Department'
+    },
+    {
+      name: 'id'
+    },
+    {
+      name: 'location'
     }
   ]
 

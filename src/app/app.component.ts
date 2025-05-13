@@ -13,6 +13,8 @@ import { DynamicTemplateComponent } from './components/dynamic-template/dynamic-
 import * as XLSX from 'xlsx';
 import { MapTemplateComponent } from './components/map-template/map-template.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -22,6 +24,8 @@ ModuleRegistry.registerModules([AllCommunityModule]);
   imports: [RouterOutlet, MatSlideToggleModule, AgGridAngular,
     MatCheckboxModule,
     MatButtonModule,
+    MatIconModule,
+    CommonModule,
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
@@ -39,6 +43,7 @@ export class AppComponent {
   colDefs = signal<ColDef[]>([])
   mapping = signal<{ [field: string]: string }>({});
   colsFromExcel = signal<string[]>([]);
+  uploadedFileName = signal<string | null>(null);
 
   showErrors = signal(true);
   showValid = signal(true);
@@ -75,22 +80,28 @@ export class AppComponent {
 
   onFileChange(event: any) {
     const file = event.target.files[0];
+    if (file) {
+      this.uploadedFileName.set(file.name);
+    }
     const reader = new FileReader();
     reader.onload = (e: any) => {
       const workbook = XLSX.read(e.target.result, { type: 'array' });
       const firstSheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[firstSheetName];
       this.rowData.set(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
+      console.log(this.rowData());
       this.setColsFromExcel(this.rowData());
       let mapDialog = this.dialog.open(MapTemplateComponent, {
-        width: '50%',
+        // width: '50%',
         data: {
           colsFromExcel: this.colsFromExcel(),
           mapped: this.getMapped()
         }
       })
       mapDialog.afterClosed().subscribe((result: any) => {
-        this.afterMapping(result);
+        if(result){
+          this.afterMapping(result);
+        }
         // this.mapping.set(result);
         // this.colDefs.set(this.importService.fields.map((field: any) => {
         //   return {
@@ -136,13 +147,14 @@ export class AppComponent {
   }
   updateMapping() {
     let mapDialog = this.dialog.open(MapTemplateComponent, {
-      width: '50%',
+      // width: '50%',
       data: {
         colsFromExcel: this.colsFromExcel(),
         mapped: this.mapping()
       }
     })
     mapDialog.afterClosed().subscribe((result: any) => {
+      if(result)
       this.afterMapping(result);
     })
   }
@@ -167,4 +179,11 @@ export class AppComponent {
     }))
   }
 
+  removeFile() {
+    this.uploadedFileName.set(null);
+    this.rowData.set([]);
+    this.colsFromExcel.set([]);
+    this.mapping.set({});
+    this.colDefs.set([]);
+  }
 }

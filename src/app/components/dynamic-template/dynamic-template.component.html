@@ -1,27 +1,29 @@
 <div class="dynamic-template-wrapper">
-  <div class="fields-card">
-    <h2 class="mat-headline-2 m-b-16"><mat-icon class="icon">list_alt</mat-icon> Available Fields</h2>
-    <mat-selection-list #selectedList (selectionChange)="toggleField(selectedList)">
-      <mat-list-option *ngFor="let field of fields" [selected]="isSelected(field)" [disabled]="field.required" [value]="field">
-        <span>
-          <mat-icon *ngIf="field.required" class="icon-required" color="warn">star</mat-icon>
-          {{ field.name }}
-        </span>
-      </mat-list-option>
-    </mat-selection-list>
-  </div>
-  <div class="divider"></div>
-  <div class="fields-card">
-    <h2 class="mat-headline-2 m-b-16"><mat-icon class="icon">checklist</mat-icon> Selected Fields</h2>
-    <mat-list>
-      <mat-list-item *ngFor="let name of selectedFields()">
-        <mat-icon class="icon-selected" color="primary">check_circle</mat-icon>
-        {{ name.name }}
-      </mat-list-item>
-    </mat-list>
+  <div class="dynamic-scroll-area">
+    <div class="fields-card">
+      <h2 class="mat-headline-2 m-b-16"><mat-icon class="icon">list_alt</mat-icon> Available Fields</h2>
+      <mat-selection-list #selectedList (selectionChange)="toggleField(selectedList)">
+        <mat-list-option *ngFor="let field of fields" [selected]="isSelected(field)" [disabled]="field.required" [value]="field">
+          <span>
+            <mat-icon *ngIf="field.required" class="icon-required" color="warn">star</mat-icon>
+            {{ field.name }}
+          </span>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+    <div class="divider"></div>
+    <div class="fields-card">
+      <h2 class="mat-headline-2 m-b-16"><mat-icon class="icon">checklist</mat-icon> Selected Fields</h2>
+      <mat-list>
+        <mat-list-item *ngFor="let name of selectedFields()">
+          <mat-icon class="icon-selected" color="primary">check_circle</mat-icon>
+          {{ name.name }}
+        </mat-list-item>
+      </mat-list>
+    </div>
   </div>
 </div>
 <div class="footer-actions">
-  <button mat-stroked-button (click)="dialogRef.close()"><mat-icon>close</mat-icon> Close</button>
-  <button mat-flat-button color="primary" (click)="handleDownload()"><mat-icon>download</mat-icon> Download</button>
+  <button mat-raised-button color="primary" (click)="dialogRef.close()"><mat-icon>close</mat-icon> Close</button>
+  <button mat-raised-button color="primary" (click)="handleDownload()"><mat-icon>download</mat-icon> Download</button>
 </div>

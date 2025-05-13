@@ -1,4 +1,4 @@
-<div class="container" style="">
+<div class="container">
   <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
     <mat-step>
       <ng-template matStepLabel>Download Template</ng-template>
@@ -8,8 +8,17 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Upload</ng-template>
-      <div style="padding: 16px 0px;">
-        <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls">
+      <div style="padding: 16px 0px; display: flex; align-items: center; gap: 16px;">
+        <ng-container *ngIf="!uploadedFileName(); else fileInfo">
+          <button mat-raised-button color="primary" (click)="fileInput.click()">Upload Excel File</button>
+          <input #fileInput type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" style="display: none;" />
+        </ng-container>
+        <ng-template #fileInfo>
+          <span>{{ uploadedFileName() }}</span>
+          <button mat-icon-button color="warn" (click)="removeFile()" aria-label="Remove file">
+            <mat-icon>close</mat-icon>
+          </button>
+        </ng-template>
       </div>
     </mat-step>
     <mat-step>
@@ -22,9 +31,11 @@
           </div>
           <div style="flex: 1;"></div>
           <div style="display: flex; gap: 12px;">
-            <button mat-button (click)="updateMapping()">Update Mapping</button>
-            <button mat-button (click)="downloadData()">Download Data</button>
-            <button mat-button (click)="saveData()">Proceed</button>
+            <button mat-stroked-button (click)="updateMapping()">Update Mapping</button>
+            <button mat-stroked-button (click)="downloadData()">
+              <mat-icon>download</mat-icon>
+              Download Data</button>
+            <button mat-stroked-button (click)="saveData()">Proceed</button>
           </div>
         </div>
         <ag-grid-angular style="width: 100%; height: 100%;" [rowData]="filteredRowData" [columnDefs]="colDefs()" />
