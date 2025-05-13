@@ -11,6 +11,7 @@ export class ImportService {
     },
     {
       name: 'email',
+      required: true
     },
     {
       name: 'phone',

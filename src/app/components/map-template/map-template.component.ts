@@ -1,5 +1,6 @@
 import { Component, Inject, inject, Input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
@@ -12,6 +13,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   standalone: true,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
     MatOptionModule,
@@ -25,36 +27,25 @@ export class MapTemplateComponent {
   importService = inject(ImportService);
   fields = this.importService.fields;
 
-  // Mapping: { [fieldName]: excelColName }
-  mapping: { [field: string]: string } = {};
+  form: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<MapTemplateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { colsFromExcel: string[], mapped?: { [field: string]: string } },
+    private fb: FormBuilder
   ) {
     this.colsFromExcel.set(this.data.colsFromExcel);
-    console.log(this.colsFromExcel());
-    // Preselect mapped data if provided
-    if (data.mapped) {
-      this.mapping = { ...data.mapped };
-    } else {
-      // Optionally, initialize with empty mapping
-      this.fields.forEach((field: any) => {
-        this.mapping[field.name] = '';
-      });
-    }
-  }
-
-  onMappingChange(fieldName: string, colName: string) {
-    console.log(fieldName, colName);
-    this.mapping[fieldName] = colName;
+    // Build form with one control per field
+    const group: { [key: string]: FormControl } = {};
+    this.fields.forEach((field: any) => {
+      group[field.name] = new FormControl(data.mapped?.[field.name] || '');
+    });
+    this.form = this.fb.group(group);
   }
 
   onSubmit() {
-    // You can emit or use this.mapping as needed
-    // For example, close dialog and pass mapping
-    this.dialogRef.close(this.mapping);
-    // Or, alternatively, pass mapping to ag-grid
-    // this.importService.processMapping(this.mapping);
+    // Get mapping from form values
+    const mapping = this.form.value;
+    this.dialogRef.close(mapping);
   }
 }

@@ -1,22 +1,33 @@
-<div class="container" style="width: 100%;height: 100%;">
+<div class="container" style="">
   <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
     <mat-step>
       <ng-template matStepLabel>Download Template</ng-template>
-      <button mat-button (click)="handleDownload()">Download Template</button>
+      <div style="padding: 16px 0px;">
+        <button mat-button (click)="handleDownload()">Download Template</button>
+      </div>
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Upload</ng-template>
-      <div>
+      <div style="padding: 16px 0px;">
         <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls">
       </div>
-      
-      
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Data</ng-template>
-      <div style="width: 100%; height: 100%; display: grid;">
-        <ag-grid-angular style="width: 100%; height: 100%;" [rowData]="rowData"
-          [columnDefs]="colDefs()" />
+      <div style="width: 100%; height: 100%; display: grid; padding: 16px 0px;">
+        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+          <div style="display: flex; gap: 24px;">
+            <mat-checkbox [checked]="showErrors()" (change)="toggleShowErrors($event)">Show Error Records</mat-checkbox>
+            <mat-checkbox [checked]="showValid()" (change)="toggleShowValid($event)">Show Valid Records</mat-checkbox>
+          </div>
+          <div style="flex: 1;"></div>
+          <div style="display: flex; gap: 12px;">
+            <button mat-button (click)="updateMapping()">Update Mapping</button>
+            <button mat-button (click)="downloadData()">Download Data</button>
+            <button mat-button (click)="saveData()">Proceed</button>
+          </div>
+        </div>
+        <ag-grid-angular style="width: 100%; height: 100%;" [rowData]="filteredRowData" [columnDefs]="colDefs()" />
       </div>
     </mat-step>
   </mat-stepper>

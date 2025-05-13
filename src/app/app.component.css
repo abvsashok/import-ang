@@ -24,6 +24,11 @@
 .ag-theme-alpine, ag-grid-angular {
     flex: 1 1 auto;
     height: 100% !important;
-    min-height: 400px;
+    min-height: 70vh;
     width: 100%;
+}
+
+::ng-deep .required-error {
+  background-color: #ffebee !important;
+  color: #c62828 !important;
 }
