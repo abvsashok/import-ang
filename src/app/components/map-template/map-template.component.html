@@ -1,10 +1,15 @@
 <div class="map-template">
   <h2 style="margin-bottom: 6px; text-align: center;">Map Fields to Excel Columns</h2>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="map-template-form">
     <div class="mapping-scroll-area">
       <div class="mapping-row" *ngFor="let field of fields">
         <div class="field-label">
-          <span>{{ field.name }}</span>
+          <span>
+            <ng-container *ngIf="field.required">
+              <span style="color: #d32f2f; font-size: 0.95em; margin-right: 2px;" title="Required">*</span>
+            </ng-container>
+            {{ field.name }}
+          </span>
         </div>
         <div class="excel-col">
           <mat-form-field appearance="fill" style="width: 100%;">

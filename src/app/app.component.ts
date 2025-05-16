@@ -101,27 +101,10 @@ export class AppComponent {
         }
       })
       mapDialog.afterClosed().subscribe((result: any) => {
-        if(result){
+        if (result) {
           this.afterMapping(result);
           this.stepper.next();
         }
-        // this.mapping.set(result);
-        // this.colDefs.set(this.importService.fields.map((field: any) => {
-        //   return {
-        //     field: this.mapping()?.[field.name] || '',
-        //     required: field.required,
-        //     headerName: field.name,
-        //     type: 'string',
-        //     cellRenderer: 'agTextCellRenderer',
-        //     editable: true,
-        //     cellClass: (params: any) => {
-        //       if (field.required && (!params.value || params.value === '')) {
-        //         return 'required-error';
-        //       }
-        //       return '';
-        //     }
-        //   }
-        // }))
       });
     };
     reader.readAsArrayBuffer(file);
@@ -176,8 +159,8 @@ export class AppComponent {
       }
     })
     mapDialog.afterClosed().subscribe((result: any) => {
-      if(result)
-      this.afterMapping(result);
+      if (result)
+        this.afterMapping(result);
     })
   }
 

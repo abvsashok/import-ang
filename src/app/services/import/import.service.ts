@@ -18,6 +18,20 @@ export class ImportService {
       required: true
     },
     {
+      name:"corporateName",
+      required: true,
+    },
+    {
+      name: 'companyName'
+    },
+    {
+      name: 'companyGroup'
+    },
+    {
+      name: 'companyGroupId',
+      required: true,
+    },
+    {
       name: 'address'
     },
     {
@@ -27,14 +41,12 @@ export class ImportService {
       name: 'state'
     },
     {
-      name: 'zip'
+      name: 'postalCode'
     },
     {
       name: 'country'
     },
-    {
-      name: 'CompanyName'
-    },
+
     {
       name: 'Department'
     },
